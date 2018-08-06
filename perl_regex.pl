@@ -14,8 +14,16 @@ while( <$file> ) {
     chomp;      # Quita los saltos de línea y los caracteres raros
     # Usamos la función m (match) para validar nuestra expresión que en Perl se encierra entre / slashes
     if( m/^[\d]{4,4}.*?,(.*?),(.*?),(\d+),(\d+),.*$/ ) {
-        print $_ ."\n";
-        $match++;
+        # Valida si el visitante le ganó al equipo local
+        if( $4 > $3 ) {
+            print $_ ."\n";
+            $match++;
+        }
+        # NOTA: En Perl las variables de agrupaciones de expresiones regulares comienzan en:
+        #       $0 = toda la cadena completa (en casi todos los lenguajes, la línea antes de hacer match) que nos puede servir para fragmentarla de otras formas
+        #       $1 = primer grupo en la expresión regular de izquierda a derecha
+        #       $2 = segundo grupo en la expresión regular de izquierda a derecha
+        #       $(n) = así sucesivamente
     }
     else {
         $nomatch++;
