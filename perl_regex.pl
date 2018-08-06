@@ -13,7 +13,7 @@ open( my $file, "<./files/results.csv" ) or die( "No hay archivo" );
 while( <$file> ) {
     chomp;      # Quita los saltos de línea y los caracteres raros
     # Usamos la función m (match) para validar nuestra expresión que en Perl se encierra entre / slashes
-    if( m/^[\d]{4,4}\-02-.*$/ ) {
+    if( m/^[\d]{4,4}.*?,(.*?),(.*?),(\d+),(\d+),.*$/ ) {
         print $_ ."\n";
         $match++;
     }
@@ -25,4 +25,4 @@ while( <$file> ) {
 # Cierra el archivo
 close( $file );
 
-printf( "Se encontraron %d aciertos \n", $match );
+printf( "Se encontraron: \n - %d aciertos \n - %d desaciertos \n", $match, $nomatch );
