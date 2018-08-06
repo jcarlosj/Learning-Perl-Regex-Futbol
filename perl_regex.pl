@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+my $time = time;        # Número de segundos que han pasado desde 1970
 my $match = 0;
 my $nomatch = 0;
 
@@ -13,12 +14,12 @@ open( my $file, "<./files/results.csv" ) or die( "No hay archivo" );
 while( <$file> ) {
     chomp;      # Quita los saltos de línea y los caracteres raros
     # Usamos la función m (match) para validar nuestra expresión que en Perl se encierra entre / slashes
-    if( m/^[\d]{4,4}.*?,(.*?),(.*?),(\d+),(\d+),.*$/ ) {
+    if( m/^([\d]{4,4})\-.*?,(.*?),(.*?),(\d+),(\d+),.*$/ ) {
         # Valida si el visitante le ganó al equipo local
-        if( $4 > $3 ) {
+        if( $5 > $4 ) {
             printf(
-                "%s (%d) - (%d) %s\n",
-                $1, $3, $4, $2
+                "%s: %s (%d) - (%d) %s\n",
+                $1, $2, $4, $5, $3
             );
             $match++;
         }
@@ -36,4 +37,4 @@ while( <$file> ) {
 # Cierra el archivo
 close( $file );
 
-printf( "Se encontraron: \n - %d aciertos \n - %d desaciertos \n", $match, $nomatch );
+printf( "Se encontraron: \n - %d aciertos \n - %d desaciertos \ntardó %d segundos\n", $match, $nomatch, time() - $time );
