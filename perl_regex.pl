@@ -16,7 +16,10 @@ while( <$file> ) {
     if( m/^[\d]{4,4}.*?,(.*?),(.*?),(\d+),(\d+),.*$/ ) {
         # Valida si el visitante le ganó al equipo local
         if( $4 > $3 ) {
-            print $_ ."\n";
+            printf(
+                "%s (%d) - (%d) %s\n",
+                $1, $3, $4, $2
+            );
             $match++;
         }
         # NOTA: En Perl las variables de agrupaciones de expresiones regulares comienzan en:
